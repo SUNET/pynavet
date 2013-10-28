@@ -3,6 +3,3 @@ build/
 .idea/
 *.egg-info
 dist/
-m.py
-m2.py
-mm.py
