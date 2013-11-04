@@ -6,6 +6,7 @@ from pynavet.transport import CertAuthTransport
 from pynavet.plugins import SerializablePlugin
 from suds.client import Client
 from suds.cache import ObjectCache
+from suds.xsd.doctor import ImportDoctor, Import
 
 
 class NavetClient(object):
@@ -42,8 +43,12 @@ class NavetClient(object):
         transport = CertAuthTransport(cert=cert, **kwargs)
         headers = {"Content-Type": "text/xml;charset=UTF-8"}
 
-        self.client = Client('file://%s/%s' (path, wsdl), location=url, transport=transport, headers=headers,
-                             cache=cache, plugins=self.plugins)
+        # Do the magic XSD dance, required since the WSDL lack explicit xsd imports
+        imp = Import('http://schemas.xmlsoap.org/soap/encoding/', location='file://%s/schema/soap-encoding.xsd' % path)
+        doctor = ImportDoctor(imp)
+
+        self.client = Client('file://%s/%s' % (path, wsdl), location=url, transport=transport, headers=headers,
+                             cache=cache, plugins=self.plugins, doctor=doctor)
 
         if serializable:
             self.load_plugin(SerializablePlugin)

@@ -4,6 +4,8 @@ This module provides suds plugins.
 from suds.plugin import MessagePlugin
 from suds.sudsobject import asdict
 from logging import getLogger
+from lxml import etree
+from pkg_resources import resource_filename
 
 LOG = getLogger(__name__)
 
@@ -43,3 +45,16 @@ class SerializablePlugin(MessagePlugin):
             else:
                 out[key] = val
         return out
+
+
+class MarshallXMLData(MessagePlugin):
+    """
+    This class marshall the received data from NAVET by removing unneeded attributes from the XML, translate remaining
+    attributes to english, then converts the XML into a python dict.
+    """
+    def unmarshalled(self, context):
+        xslt_dir = resource_filename(__name__, 'xslt')
+        xslt = etree.parse('%s/addressdata.xsl' % xslt_dir)
+        xml = etree.fromstring(context.reply.encode('iso-8859-1'))
+        transform = etree.XSLT(xslt)
+        context.reply = etree.tostring(transform(xml))

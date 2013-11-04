@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Navetavisering xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/avisering/V1/Navetavisering.xsd">
+<Folkbokforingsposter>
+<Folkbokforingspost>
+  <Arendeuppgift andringstidpunkt="20030203000002"/>
+  <Personpost>
+    <PersonId>
+      <PersonNr>xxxxxxxxxx</PersonNr>
+    </PersonId>
+    <Namn>
+      <Tilltalsnamnsmarkering>20</Tilltalsnamnsmarkering>
+      <Fornamn>John</Fornamn>
+      <Efternamn>Doe</Efternamn>
+    </Namn>
+    <Adresser>
+      <Folkbokforingsadress>
+        <Utdelningsadress2>Example road 10</Utdelningsadress2>
+        <PostNr>YYY YYY</PostNr>
+        <Postort>Town</Postort>
+      </Folkbokforingsadress>
+      <Riksnycklar>
+        <FastighetsId>yyyy</FastighetsId>
+        <AdressplatsId>zzzz</AdressplatsId>
+        <LagenhetsId>xxxx</LagenhetsId>
+      </Riksnycklar>
+    </Adresser>
+  </Personpost>
+</Folkbokforingspost>
+</Folkbokforingsposter>
+</Navetavisering>

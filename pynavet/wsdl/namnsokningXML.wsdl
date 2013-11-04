@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXML" xmlns:intf="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXML" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXML">
+  <wsdl:types/>
+  <wsdl:message name="getDataResponse">
+    <wsdl:part name="getDataReturn" type="soapenc:string"/>
+  </wsdl:message>
+  <wsdl:message name="getDataRequest">
+    <wsdl:part name="adress" type="soapenc:string"/>
+    <wsdl:part name="bestallningsid" type="soapenc:string"/>
+    <wsdl:part name="eftermellannamn" type="soapenc:string"/>
+    <wsdl:part name="fodelsetidFrom" type="soapenc:string"/>
+    <wsdl:part name="fodelsetidTom" type="soapenc:string"/>
+    <wsdl:part name="fornamn" type="soapenc:string"/>
+    <wsdl:part name="kon" type="soapenc:string"/>
+    <wsdl:part name="postnummerFrom" type="soapenc:string"/>
+    <wsdl:part name="postnummerTom" type="soapenc:string"/>
+    <wsdl:part name="postort" type="soapenc:string"/>
+  </wsdl:message>
+  <wsdl:portType name="NaNamnsokningXMLWS">
+    <wsdl:operation name="getData" parameterOrder="adress bestallningsid eftermellannamn fodelsetidFrom fodelsetidTom fornamn kon postnummerFrom postnummerTom postort">
+      <wsdl:input message="impl:getDataRequest" name="getDataRequest"/>
+      <wsdl:output message="impl:getDataResponse" name="getDataResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="namnsokningXMLSoapBinding" type="impl:NaNamnsokningXMLWS">
+    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getData">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getDataRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXM L" use="encoded"/>
+      </wsdl:input>
+      <wsdl:output name="getDataResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXM L" use="encoded"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="NaNamnsokningXMLWSService">
+    <wsdl:port binding="impl:namnsokningXMLSoapBinding" name="namnsokningXML">
+      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/services/namnsokningXML "/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

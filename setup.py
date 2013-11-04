@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from setuptools import setup, find_packages
 
 __author__ = 'Stefan Wold'
@@ -7,13 +9,16 @@ version = '0.1dev'
 install_requires = [
     'suds >= 0.4.1',
     'requests >= 1.2.3',
+    'xmltodict == 0.8.3',
+    'lxml >= 3.0',
 ]
 
 testing_extras = [
     'nose==1.2.1',
     'nosexcover==1.0.8',
     'coverage==3.6',
-    'suds>=0.4.1'
+    'mock==1.0.1',
+    'suds>=0.4.1',
 ]
 
 setup(
