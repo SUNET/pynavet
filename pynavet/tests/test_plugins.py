@@ -10,11 +10,6 @@ import cPickle
 class TestSerializablePlugin(TestCase):
     def test_recursive_asdict(self):
         not_serializable = NavetClient('wsdl/personpostXML.wsdl', '', '', False).client.factory.create('ns0:Struct')
-        try:
-            cPickle.dumps(not_serializable)
-        except AttributeError:
-            pass
-
         sp = SerializablePlugin()
         serializable = sp._recursive_asdict(not_serializable)
         self.assertTrue(cPickle.dumps(serializable))
