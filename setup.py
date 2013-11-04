@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 __author__ = 'Stefan Wold'
 
-version = '0.1dev'
+version = '0.5'
 
 install_requires = [
     'suds >= 0.4.1',
