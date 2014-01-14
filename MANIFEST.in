@@ -1,0 +1,1 @@
+recursive-include pynavet *.xsl *.wsdl *.xsd
