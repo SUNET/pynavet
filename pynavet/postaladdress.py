@@ -52,7 +52,11 @@ class PostalAddress(NavetClient):
                 return result
             return xmltodict(result)
         except WebFault, e:
-            raise e.message
+            LOG.error(e.message)  # TODO: Add translation for exceptions
+            raise
+        except:
+            LOG.error("Unexpected error.")
+            raise
 
     def get_official_address(self, identity_number):
         """
