@@ -9,7 +9,7 @@ version = '0.5'
 install_requires = [
     'suds >= 0.4.1',
     'requests >= 1.2.3',
-    'xmltodict == 0.8.3',
+    'xmltodict == 0.8.6',
     'lxml >= 3.0',
 ]
 
@@ -33,6 +33,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
+	'pynavet': ['wsdl/*.wsdl', 'schema/*.xsd', 'xslt/*.xsl']
     },
     zip_safe=False,
     install_requires=install_requires,
