@@ -74,7 +74,7 @@ class PostalAddress(NavetClient):
                 return False
             return xmltodict(etree.tostring(xml[0]))
         except WebFault, e:
-            raise e.message
+            raise e
 
     def get_name(self, identity_number):
         """
@@ -92,7 +92,7 @@ class PostalAddress(NavetClient):
                 return False
             return xmltodict(etree.tostring(xml[0]))
         except WebFault, e:
-            raise e.message
+            raise e
 
     def get_name_and_official_address(self, identity_number):
         """
@@ -113,4 +113,4 @@ class PostalAddress(NavetClient):
             result.update(xmltodict(etree.tostring(address[0])))
             return result
         except WebFault, e:
-            raise e.message
+            raise e
