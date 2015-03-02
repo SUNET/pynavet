@@ -76,20 +76,15 @@ class PostalAddress(NavetClient):
         @type data: OrderedDict | None
         """
         try:
-            if data is None:
-                data = self.get_all_data(identity_number, as_xml=False)
-            try:
-                person = data['NavetNotifications']['PopulationItems']['PopulationItem']['PersonItem']
-                result = OrderedDict([(u'OfficialAddress', person['PostalAddresses']['OfficialAddress']),
-                                      ])
-            except KeyError:
-                LOG.exception("NAVET address lookup failure")
-                result = False
-            if self.debug:
-                self.logger.debug("NAVET get_official_address result:\n{!r}".format(result))
-            return result
-        except WebFault, e:
-            raise e
+            person = self._get_person(identity_number, data)
+            result = OrderedDict([(u'OfficialAddress', person['PostalAddresses']['OfficialAddress']),
+                                  ])
+        except KeyError:
+            self.logger.exception("NAVET address lookup failure")
+            result = False
+        if self.debug:
+            self.logger.debug("NAVET get_official_address result:\n{!r}".format(result))
+        return result
 
     def get_name(self, identity_number, data=None):
         """
@@ -102,20 +97,15 @@ class PostalAddress(NavetClient):
         @type data: OrderedDict | None
         """
         try:
-            if data is None:
-                data = self.get_all_data(identity_number, as_xml=False)
-            try:
-                person = data['NavetNotifications']['PopulationItems']['PopulationItem']['PersonItem']
-                result = OrderedDict([(u'Name', person['Name']),
-                                      ])
-            except KeyError:
-                LOG.exception("NAVET name lookup failure")
-                result = False
-            if self.debug:
-                self.logger.debug("NAVET get_name result:\n{!r}".format(result))
-            return result
-        except WebFault, e:
-            raise e
+            person = self._get_person(identity_number, data)
+            result = OrderedDict([(u'Name', person['Name']),
+                                  ])
+        except KeyError:
+            self.logger.exception("NAVET get_name lookup failure")
+            result = False
+        if self.debug:
+            self.logger.debug("NAVET get_name result:\n{!r}".format(result))
+        return result
 
     def get_name_and_official_address(self, identity_number, data=None):
         """
@@ -128,20 +118,35 @@ class PostalAddress(NavetClient):
         @type data: OrderedDict | None
         """
         try:
+            person = self._get_person(identity_number, data)
+            result = OrderedDict([(u'Name', person['Name']),
+                                  (u'OfficialAddress', person['PostalAddresses']['OfficialAddress']),
+                                  ])
+        except KeyError:
+            self.logger.exception("NAVET get_name_and_official_address lookup failure")
+            result = False
+        if self.debug:
+            self.logger.debug("NAVET get_name_and_official_address result:\n{!s}".format(pprint.pformat(result)))
+        return result
+
+    def _get_person(self, identity_number, data=None):
+        """
+        Get the 'PersonItem' object for a national identity number.
+
+        @param identity_number: The national identity number to lookup
+        @type identity_number: str
+        @param data: Results previously fetched with get_all_data(identity_number, as_xml=False) (optional)
+        @type data: OrderedDict | None
+        @return: Person data
+        @rtype: OrderedDict
+        """
+        # Only enable this excessive logging when really needed.
+        #if self.debug:
+        #    self.logger.debug("NAVET get_name_and_official_address parsing:\n{!s}".format(pprint.pformat(data)))
+        try:
             if data is None:
                 data = self.get_all_data(identity_number, as_xml=False)
-            if self.debug:
-                self.logger.debug("NAVET get_name_and_official_address parsing:\n{!s}".format(pprint.pformat(data)))
-            try:
-                person = data['NavetNotifications']['PopulationItems']['PopulationItem']['PersonItem']
-                result = OrderedDict([(u'Name', person['Name']),
-                                      (u'OfficialAddress', person['PostalAddresses']['OfficialAddress']),
-                                      ])
-            except KeyError:
-                LOG.exception("NAVET name/address lookup failure")
-                result = False
-            if self.debug:
-                self.logger.debug("NAVET get_name_and_official_address result:\n{!s}".format(pprint.pformat(result)))
-            return result
-        except WebFault, e:
+            person = data['NavetNotifications']['PopulationItems']['PopulationItem']['PersonItem']
+            return person
+        except WebFault as e:
             raise e
