@@ -10,8 +10,6 @@ from logging import getLogger
 from collections import OrderedDict
 import pprint
 
-LOG = getLogger(__name__)
-
 
 class PostalAddress(NavetClient):
     """
@@ -37,7 +35,7 @@ class PostalAddress(NavetClient):
         self.key_file = key_file
         self.order_id = order_id
         self.debug = debug
-        self.logger = getLogger()
+        self.logger = getLogger(__name__)
         NavetClient.__init__(self, wsdl='wsdl/personpostXML.wsdl', cert=(cert, key_file), url=ws_url,
                              use_cache=use_cache, **kwargs)
         # This plugin translates all (known) XML-tags from Swedish to English
@@ -61,10 +59,10 @@ class PostalAddress(NavetClient):
                 self.logger.debug("NAVET get_all_data lookup result:\n{!r}".format(result))
             return result
         except WebFault as e:
-            LOG.error(e.message)  # TODO: Add translation for exceptions
+            self.logger.error(e.message)  # TODO: Add translation for exceptions
             raise
         except:
-            LOG.error("Unexpected error.")
+            self.logger.error("Unexpected error.")
             raise
 
     def get_official_address(self, identity_number, data=None):
