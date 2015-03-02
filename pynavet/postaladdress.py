@@ -129,6 +129,27 @@ class PostalAddress(NavetClient):
             self.logger.debug("NAVET get_name_and_official_address result:\n{!s}".format(pprint.pformat(result)))
         return result
 
+    def get_relations(self, identity_number, data=None):
+        """
+        Retrieve the relations information for the provided national identity number from the Swedish population
+        register.
+
+        @param identity_number: The national identity number to lookup
+        @type identity_number: str
+        @param data: Results previously fetched with get_all_data(identity_number, as_xml=False) (optional)
+        @type data: OrderedDict | None
+        """
+        try:
+            person = self._get_person(identity_number, data)
+            result = OrderedDict([(u'Relations', person['Relations']),
+                                  ])
+        except KeyError:
+            self.logger.exception("NAVET get_relations lookup failure")
+            result = False
+        if self.debug:
+            self.logger.debug("NAVET get_relations result:\n{!r}".format(result))
+        return result
+
     def _get_person(self, identity_number, data=None):
         """
         Get the 'PersonItem' object for a national identity number.
