@@ -69,4 +69,13 @@
     <xsl:template match="Folkbokforingsadress">
         <OfficialAddress><xsl:apply-templates select="@*|node()" /></OfficialAddress>
     </xsl:template>
+    <xsl:template match="Relationer">
+        <Relations><xsl:apply-templates select="@*|node()" /></Relations>
+    </xsl:template>
+    <xsl:template match="Relationstyp">
+        <RelationType><xsl:apply-templates select="@*|node()" /></RelationType>
+    </xsl:template>
+    <xsl:template match="RelationFromdatum">
+        <RelationStartDate><xsl:apply-templates select="@*|node()" /></RelationStartDate>
+    </xsl:template>
 </xsl:stylesheet>

@@ -4,12 +4,12 @@ from setuptools import setup, find_packages
 
 __author__ = 'Stefan Wold'
 
-version = '0.6.0'
+version = '0.7.0-dev'
 
 install_requires = [
     'suds >= 0.4.1',
     'requests >= 1.2.3',
-    'xmltodict == 0.8.6',
+    'xmltodict >= 0.8.6',
     'lxml >= 3.0',
 ]
 
@@ -33,7 +33,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     package_data={
-	'pynavet': ['wsdl/*.wsdl', 'schema/*.xsd', 'xslt/*.xsl']
+        'pynavet': ['wsdl/*.wsdl', 'schema/*.xsd', 'xslt/*.xsl']
     },
     zip_safe=False,
     install_requires=install_requires,
