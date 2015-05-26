@@ -13,6 +13,8 @@ class CertAuthTransport(HttpAuthenticated):
     def __init__(self, **kwargs):
         self.cert = kwargs.pop('cert', None)
         self.verify = kwargs.pop('verify', True)
+        # Can't pass this one on to HttpAuthenticated. Crashes on unknown attributes.
+        kwargs.pop('debug', False)
         HttpAuthenticated.__init__(self, **kwargs)
 
     def send(self, request):
