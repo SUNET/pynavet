@@ -55,6 +55,9 @@ class MarshallXMLData(MessagePlugin):
     def unmarshalled(self, context):
         xslt_dir = resource_filename(__name__, 'xslt')
         xslt = etree.parse('%s/addressdata.xsl' % xslt_dir)
-        xml = etree.fromstring(context.reply.encode('iso-8859-1'))
+        try:
+            xml = etree.fromstring(context.reply.encode('iso-8859-1'))
+        except etree.XMLSyntaxError:  # XMLSyntaxError: Input is not proper UTF-8, indicate encoding !
+            xml = etree.fromstring(context.reply.encode('UTF-8'))
         transform = etree.XSLT(xslt)
         context.reply = etree.tostring(transform(xml))
