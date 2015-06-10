@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML" xmlns:intf="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML">
-  <wsdl:types/>
-  <wsdl:message name="getDataResponse">
-    <wsdl:part name="getDataReturn" type="soapenc:string"/>
-  </wsdl:message>
+<wsdl:definitions xmlns:impl="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:na="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1" targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2">
+  <wsdl:documentation>Version 2.0</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.skatteverket.se/folkbokforing/na/personpostXML/v2">
+      <xsd:import schemaLocation="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1/Epersondata.xsd" namespace="http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1"/>
+    </xsd:schema>
+  </wsdl:types>
   <wsdl:message name="getDataRequest">
-    <wsdl:part name="bestallningsid" type="soapenc:string"/>
-    <wsdl:part name="personid" type="soapenc:string"/>
+    <wsdl:part name="parameters" element="na:PersonpostRequest"/>
   </wsdl:message>
-  <wsdl:portType name="NaPersonPostXMLWS">
-    <wsdl:operation name="getData" parameterOrder="bestallningsid personid">
+  <wsdl:message name="getDataResponse">
+    <wsdl:part name="parameters" element="na:PersonpostXMLResponse"/>
+  </wsdl:message>
+  <wsdl:message name="NaWebServiceException">
+    <wsdl:part name="fault" element="na:WebServiceFault"/>
+  </wsdl:message>
+  <wsdl:portType name="PersonpostXMLInterface">
+    <wsdl:operation name="getData">
       <wsdl:input message="impl:getDataRequest" name="getDataRequest"/>
       <wsdl:output message="impl:getDataResponse" name="getDataResponse"/>
+      <wsdl:fault message="impl:NaWebServiceException" name="NaWebServiceException"/>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="personpostXMLSoapBinding" type="impl:NaPersonPostXMLWS">
-    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:binding name="PersonpostXMLSoapBinding" type="impl:PersonpostXMLInterface">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="getData">
       <wsdlsoap:operation soapAction=""/>
       <wsdl:input name="getDataRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML " use="encoded"/>
+        <wsdlsoap:body use="literal" parts="parameters"/>
       </wsdl:input>
       <wsdl:output name="getDataResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML " use="encoded"/>
+        <wsdlsoap:body use="literal" parts="parameters"/>
       </wsdl:output>
+      <wsdl:fault name="NaWebServiceException">
+        <wsdlsoap:fault name="NaWebServiceException" use="literal"/>
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="NaPersonPostXMLWSService">
-    <wsdl:port binding="impl:personpostXMLSoapBinding" name="personpostXML">
-      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/services/personpostXML"/>
+  <wsdl:service name="PersonpostXMLService">
+    <wsdl:port binding="impl:PersonpostXMLSoapBinding" name="personpostXML">
+      <wsdlsoap:address location="https://www2.skatteverket.se/na/na_epersondata/V2/personpostXML"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

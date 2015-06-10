@@ -5,7 +5,6 @@ from pynavet.client import NavetClient
 from pynavet.plugins import MarshallXMLData
 from suds import WebFault
 from xmltodict import parse as xmltodict
-from lxml import etree
 from logging import getLogger
 from collections import OrderedDict
 import pprint
@@ -15,6 +14,10 @@ class PostalAddress(NavetClient):
     """
     This class is used to retrieve postal address information for a provided national identity number
     """
+
+    # ws_url = 'https://www2.skatteverket.se/na/na_epersondata/V2/personpostXML'                        # Production
+    ws_url = 'https://ppx4.skatteverket.se/na/na_epersondata_demo/V2/namnsokningXML'  # Demo
+
     def __init__(self, cert, key_file, order_id, use_cache=True, debug=False, **kwargs):
         """
         @param cert: Path to authentication client certificate in PEM format
@@ -30,13 +33,12 @@ class PostalAddress(NavetClient):
         @param verify: (optional) Whether to verify SSL endpoint certificate or not, default True
         @type verify: bool
         """
-        ws_url = 'https://www2.skatteverket.se/na/na_epersondata/services/personpostXML'
         self.cert = cert
         self.key_file = key_file
         self.order_id = order_id
         self.debug = debug
         self.logger = getLogger(__name__)
-        NavetClient.__init__(self, wsdl='wsdl/personpostXML.wsdl', cert=(cert, key_file), url=ws_url,
+        NavetClient.__init__(self, wsdl='wsdl/personpostXML.wsdl', cert=(cert, key_file), url=self.ws_url,
                              use_cache=use_cache, **kwargs)
         # This plugin translates all (known) XML-tags from Swedish to English
         self.load_plugin(MarshallXMLData)
