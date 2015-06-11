@@ -584,6 +584,12 @@
 	<xs:complexType name="InvandringTYPE">
 		<xs:sequence>
 			<xs:element name="Invandringsdatum" type="OfullstandigtDatumTYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Uppehallsratt" type="UppehallsrattTYPE" minOccurs="0"/>
+			<xs:element name="NordisktPnrDa" type="Strang12TYPE" minOccurs="0"/>
+			<xs:element name="NordisktPnrFi" type="Strang12TYPE" minOccurs="0"/>
+			<xs:element name="NordisktPnrFo" type="Strang12TYPE" minOccurs="0"/>
+			<xs:element name="NordisktPnrIs" type="Strang12TYPE" minOccurs="0"/>
+			<xs:element name="NordisktPnrNo" type="Strang12TYPE" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- ************************************ -->
@@ -841,6 +847,14 @@
 			<xs:maxLength value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
+<xs:simpleType name="Strang12TYPE">
+		<xs:annotation>
+			<xs:documentation>Strängar med 12 tecken</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="Strang35TYPE">
 		<xs:annotation>
 			<xs:documentation>Strängar med 35 tecken</xs:documentation>
@@ -906,6 +920,11 @@
 		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="0"/>
 			<xs:maxInclusive value="99999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+<xs:simpleType name="UppehallsrattTYPE">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

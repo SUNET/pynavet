@@ -169,7 +169,7 @@ class PostalAddress(NavetClient):
         try:
             if data is None:
                 data = self.get_all_data(identity_number, as_xml=False)
-            person = data['NavetNotifications']['PopulationItems']['PopulationItem']['PersonItem']
+            person = data['S:Envelope']['S:Body']['ns2:PersonpostResponse']['PopulationItems']['PopulationItem']['PersonItem']
             return person
         except WebFault as e:
             raise e

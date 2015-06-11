@@ -36,4 +36,4 @@ class TestMarshallXMLData(TestCase):
         context = MagicMock(reply=open('%s/testdata.xml' % data_dir).read())
         md.unmarshalled(context)
         xml = etree.fromstring(context.reply)
-        self.assertEquals(xml.tag, 'NavetNotifications')
+        self.assertEquals(xml.tag, '{http://schemas.xmlsoap.org/soap/envelope/}Envelope')

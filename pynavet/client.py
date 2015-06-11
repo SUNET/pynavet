@@ -44,8 +44,13 @@ class NavetClient(object):
         headers = {"Content-Type": "text/xml;charset=UTF-8"}
 
         # Do the magic XSD dance, required since the WSDL lack explicit xsd imports
-        imp = Import('http://schemas.xmlsoap.org/soap/encoding/', location='file://%s/schema/soap-encoding.xsd' % path)
-        doctor = ImportDoctor(imp)
+        doctor = ImportDoctor(Import('http://schemas.xmlsoap.org/soap/encoding/',
+                                     location='file://%s/schema/soap-encoding.xsd' % path),
+                              #Import('http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1',
+                              #       location='file://%s/schema/Navetavisering.xsd' % path),
+                              Import('http://xmls.skatteverket.se/se/skatteverket/folkbokforing/na/epersondata/V1',
+                                     location='file://%s/schema/Epersondata.xsd' % path),
+                              )
 
         self.client = Client('file://%s/%s' % (path, wsdl), location=url, transport=transport, headers=headers,
                              cache=cache, plugins=self.plugins, doctor=doctor)
