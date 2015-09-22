@@ -58,3 +58,12 @@ class TestPostalAddress(TestCase):
         result = self.navet.get_name_and_official_address('')
         self.assertEquals(result['Name']['GivenName'], 'John')
         self.assertEquals(result['OfficialAddress']['Address2'], 'Example road 10')
+
+    def test_get_relations(self):
+        md = MarshallXMLData()
+        self.navet.client.service.getData = MagicMock()
+        context = MagicMock(reply=self.data)
+        md.unmarshalled(context)
+        self.navet.client.service.getData.return_value = context.reply
+        result = self.navet.get_relations('')
+        self.assertEquals(result['Relations']['Relation'][0]['RelationId']['NationalIdentityNumber'], '199401135679')

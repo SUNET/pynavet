@@ -25,6 +25,41 @@
         <LagenhetsId>xxxx</LagenhetsId>
       </Riksnycklar>
     </Adresser>
+    <Relationer>
+      <Relation>
+        <RelationId>
+          <PersonNr>199401135679</PersonNr>
+        </RelationId>
+        <Relationstyp>VF</Relationstyp>
+        <RelationFromdatum>19970917</RelationFromdatum>
+      </Relation>
+      <Relation>
+        <RelationId>
+          <PersonNr>197902069272</PersonNr>
+        </RelationId>
+        <Relationstyp>B</Relationstyp>
+        <Avregistrering>
+          <AvregistreringsorsakKod>AV</AvregistreringsorsakKod>
+          <Avregistreringsdatum>20060910</Avregistreringsdatum>
+        </Avregistrering>
+      </Relation>
+      <Relation>
+        <RelationId>
+          <PersonNr>199401135679</PersonNr>
+        </RelationId>
+        <Relationstyp>B</Relationstyp>
+      </Relation>
+      <Relation>
+        <RelationId>
+          <FodelsetidNr>197502020000</FodelsetidNr>
+        </RelationId>
+        <Relationstyp>M</Relationstyp>
+        <Namn>
+          <Fornamn>Sambalina</Fornamn>
+          <Efternamn>Caramba</Efternamn>
+        </Namn>
+      </Relation>
+    </Relationer>
   </Personpost>
 </Folkbokforingspost>
 </Folkbokforingsposter>
