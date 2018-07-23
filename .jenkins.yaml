@@ -1,4 +1,7 @@
 python_module: pynavet
 python_source_directory: pynavet
-publish_over_ssh: pypi.sunet.se
+publish_over_ssh:
+  - pypi.sunet.se
+slack:
+  room: eduid-builds
 clean_workspace: true
