@@ -1,0 +1,4 @@
+python_module: pynavet
+python_source_directory: pynavet
+publish_over_ssh: pypi.sunet.se
+clean_workspace: true
